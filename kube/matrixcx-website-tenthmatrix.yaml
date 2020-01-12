@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrixcx-website-tenthmatrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrixcx-website-tenthmatrix
+  template:
+    metadata:
+      labels:
+        app: matrixcx-website-tenthmatrix
+    spec:
+      containers:
+        - name: app
+          image: bwalia/matrixcx-website-tenthmatrix:latest
+          resources:
+            limits:
+              memory: "750Mi"
+            requests:
+              memory: "500Mi"
+          ports:
+            - containerPort: 3015
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_DB
+              value: "jobshout_live"
+            - name: MONGO_HOST
+              value: "mongo-prod.tenthmatrix.co.uk"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: FRONTEND_APP_PORT
+              value: "3005"
+            - name: FRONTEND_APP_HOST
+              value: "tenthmatrix.co.uk"
